@@ -232,6 +232,8 @@ separator =
 
 userStoryMap : ClickEvent msg -> List (ToolbarButton msg)
 userStoryMap clickCard =
+    []
+    {-
     [ Button <| Lazy.lazy3 cardView Color.white (createColorItem Color.white) clickCard
     , Button <| Lazy.lazy3 cardView Color.yellow (createColorItem Color.yellow) clickCard
     , Button <| Lazy.lazy3 cardView Color.green (createColorItem Color.green) clickCard
@@ -241,6 +243,7 @@ userStoryMap clickCard =
     , Button <| Lazy.lazy3 cardView Color.red (createColorItem Color.red) clickCard
     , Button <| Lazy.lazy3 cardView Color.purple (createColorItem Color.purple) clickCard
     ]
+    -}
 
 
 view : List (ToolbarButton msg) -> Html msg

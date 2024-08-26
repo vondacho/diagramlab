@@ -172,27 +172,28 @@ view props =
                     Route.New ->
                         [ Lazy.lazy viewHelpButton props.lang
                         , Lazy.lazy2 viewSettingsButton props.lang props.currentDiagram.diagram
-                        , Lazy.lazy viewSignInButton { menu = props.menu, session = props.session, onOpenMenu = props.onOpenMenu, onSignIn = props.onSignIn, onSignOut = props.onSignOut, onCloseMenu = props.onCloseMenu }
+                        --, Lazy.lazy viewSignInButton { menu = props.menu, session = props.session, onOpenMenu = props.onOpenMenu, onSignIn = props.onSignIn, onSignOut = props.onSignOut, onCloseMenu = props.onCloseMenu }
                         ]
 
                     Route.DiagramList ->
                         [ Lazy.lazy viewHelpButton props.lang
                         , Lazy.lazy2 viewSettingsButton props.lang props.currentDiagram.diagram
-                        , Lazy.lazy viewSignInButton { menu = props.menu, session = props.session, onOpenMenu = props.onOpenMenu, onSignIn = props.onSignIn, onSignOut = props.onSignOut, onCloseMenu = props.onCloseMenu }
+                        --, Lazy.lazy viewSignInButton { menu = props.menu, session = props.session, onOpenMenu = props.onOpenMenu, onSignIn = props.onSignIn, onSignOut = props.onSignOut, onCloseMenu = props.onCloseMenu }
                         ]
 
                     Route.Settings _ ->
                         [ Lazy.lazy viewHelpButton props.lang
                         , Lazy.lazy2 viewSettingsButton props.lang props.currentDiagram.diagram
-                        , Lazy.lazy viewSignInButton { menu = props.menu, session = props.session, onOpenMenu = props.onOpenMenu, onSignIn = props.onSignIn, onSignOut = props.onSignOut, onCloseMenu = props.onCloseMenu }
+                        --, Lazy.lazy viewSignInButton { menu = props.menu, session = props.session, onOpenMenu = props.onOpenMenu, onSignIn = props.onSignIn, onSignOut = props.onSignOut, onCloseMenu = props.onCloseMenu }
                         ]
 
                     _ ->
-                        [ Lazy.lazy4 viewChangePublicStateButton props.onChangePublicStatus props.lang props.currentDiagram.isPublic (canChangePublicState props)
-                        , Lazy.lazy viewHelpButton props.lang
-                        , Lazy.lazy2 viewShareButton props.lang <| canShare props
+                        [ --Lazy.lazy4 viewChangePublicStateButton props.onChangePublicStatus props.lang props.currentDiagram.isPublic (canChangePublicState props)
+                        --, 
+                        Lazy.lazy viewHelpButton props.lang
+                        --, Lazy.lazy2 viewShareButton props.lang <| canShare props
                         , Lazy.lazy2 viewSettingsButton props.lang props.currentDiagram.diagram
-                        , Lazy.lazy viewSignInButton { menu = props.menu, session = props.session, onOpenMenu = props.onOpenMenu, onSignIn = props.onSignIn, onSignOut = props.onSignOut, onCloseMenu = props.onCloseMenu }
+                        --, Lazy.lazy viewSignInButton { menu = props.menu, session = props.session, onOpenMenu = props.onOpenMenu, onSignIn = props.onSignIn, onSignOut = props.onSignOut, onCloseMenu = props.onCloseMenu }
                         ]
                )
         )

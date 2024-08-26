@@ -19,21 +19,21 @@ module Api.Request exposing
     , shareItem
     )
 
-import Api.External.Github.GistInput exposing (GistInput)
-import Api.External.Github.Request as GithubRequest exposing (AccessToken)
-import Api.Graphql.Mutation as Mutation
-import Api.Graphql.Query as Query
-import Api.RequestError as RequestError exposing (RequestError, toError)
+--import Api.External.Github.GistInput exposing (GistInput)
+--import Api.External.Github.Request as GithubRequest exposing (AccessToken)
+--import Api.Graphql.Mutation as Mutation
+--import Api.Graphql.Query as Query
+import Api.RequestError as RequestError exposing (RequestError)
 import Diagram.Types.Id as DiagramId exposing (DiagramId)
 import Diagram.Types.Item exposing (DiagramItem)
 import Diagram.Types.Settings as DiagramSettings
 import Diagram.Types.Type exposing (DiagramType)
 import Dict
-import Env
-import Graphql.Http as Http
-import Graphql.InputObject exposing (InputGistItem, InputItem, InputSettings)
-import Graphql.OptionalArgument exposing (OptionalArgument(..))
-import Graphql.Scalar
+--import Env
+--import Graphql.Http as Http
+--import Graphql.InputObject exposing (InputGistItem, InputItem, InputSettings)
+--import Graphql.OptionalArgument exposing (OptionalArgument(..))
+--import Graphql.Scalar
 import Task exposing (Task)
 import Types.Duration as Duration exposing (Duration)
 import Types.Email as Email exposing (Email)
@@ -42,47 +42,62 @@ import Types.IpAddress as IpAddress exposing (IpAddress)
 import Types.Text as Text
 import Types.Title as Title
 import Url.Builder exposing (crossOrigin)
+import Task exposing (succeed)
+import Api.RequestError exposing (RequestError(..))
+
+
+type alias AccessToken =
+    String
 
 
 allItems : Maybe IdToken -> ( Int, Int ) -> Task RequestError (Maybe (List DiagramItem))
 allItems idToken ( offset, limit ) =
+    Task.fail NotFound
+    {-
     Query.allItems ( offset, limit )
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
-
+    -}
 allItemsWithText : Maybe IdToken -> ( Int, Int ) -> Task RequestError (Maybe (List DiagramItem))
 allItemsWithText idToken ( offset, limit ) =
+    Task.fail NotFound
+    {-
     Query.allItemsWithText ( offset, limit )
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
+    -}
 
 bookmark : Maybe IdToken -> String -> Bool -> Task RequestError (Maybe DiagramItem)
 bookmark idToken itemID isBookmark =
+    Task.fail NotFound
+    {-
     Mutation.bookmark itemID isBookmark
         |> Http.mutationRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
+    -}
 
 delete : Maybe IdToken -> DiagramId -> Bool -> Task RequestError DiagramId
 delete idToken itemID isPublic =
+    Task.fail NotFound
+    {-
     Mutation.delete (DiagramId.toString itemID) isPublic
         |> Http.mutationRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.map (\(Graphql.Scalar.Id id) -> DiagramId.fromString id)
         |> Task.mapError toError
-
+    -}
 
 deleteGist : Maybe IdToken -> AccessToken -> DiagramId -> Task RequestError DiagramId
 deleteGist idToken accessToken gistId =
+    Task.fail NotFound
+    {-
     GithubRequest.deleteGist accessToken gistId
         |> Task.mapError RequestError.fromHttpError
         |> Task.andThen
@@ -94,10 +109,12 @@ deleteGist idToken accessToken gistId =
                     |> Task.map (\(Graphql.Scalar.Id id) -> DiagramId.fromString id)
                     |> Task.mapError toError
             )
-
+    -}
 
 gistItem : Maybe IdToken -> AccessToken -> DiagramId -> Task RequestError DiagramItem
 gistItem idToken accessToken gistId =
+    Task.fail NotFound
+    {-
     GithubRequest.getGist accessToken gistId
         |> Task.mapError RequestError.fromHttpError
         |> Task.andThen
@@ -123,63 +140,77 @@ gistItem idToken accessToken gistId =
                         )
                     |> Task.mapError toError
             )
-
+    -}
 
 gistItems : Maybe IdToken -> ( Int, Int ) -> Task RequestError (List (Maybe DiagramItem))
 gistItems idToken ( offset, limit ) =
+    Task.fail NotFound
+    {-
     Query.gistItems ( offset, limit )
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
+    -}
 
 item : Maybe IdToken -> String -> Task RequestError DiagramItem
 item idToken id =
+    Task.fail NotFound
+    {-
     Query.item id False
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
+    -}
 
 items : Maybe IdToken -> ( Int, Int ) -> { isPublic : Bool, isBookmark : Bool } -> Task RequestError (List (Maybe DiagramItem))
 items idToken ( offset, limit ) params =
+    Task.fail NotFound
+    {-
     Query.items ( offset, limit ) params
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
+    -}
 
 publicItem : Maybe IdToken -> String -> Task RequestError DiagramItem
 publicItem idToken id =
+    Task.fail NotFound
+    {-
     Query.item id True
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
+    -}
 
-
-bulkSave : Maybe IdToken -> List InputItem -> Bool -> Task RequestError (List DiagramItem)
-bulkSave idToken inputs isPublic =
+bulkSave : Maybe IdToken {- -> List InputItem -} -> Bool -> Task RequestError (List DiagramItem)
+bulkSave idToken {- inputs -} isPublic =
+    Task.fail NotFound
+    {-
     List.map
         (save idToken isPublic)
         inputs
         |> Task.sequence
+    -}
 
-
-save : Maybe IdToken -> Bool -> InputItem -> Task RequestError DiagramItem
-save idToken input isPublic =
+save : Maybe IdToken -> Bool {- -> InputItem -} -> Task RequestError DiagramItem
+save idToken {- inputs -} isPublic =
+    Task.fail NotFound
+    {-
     Mutation.save isPublic input
         |> Http.mutationRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
+    -}
 
-
-saveGist : Maybe IdToken -> AccessToken -> InputGistItem -> String -> Task RequestError DiagramItem
-saveGist idToken accessToken input content =
+saveGist : Maybe IdToken -> AccessToken {- -> InputGistItem -} -> String -> Task RequestError DiagramItem
+saveGist idToken accessToken {- inputs -} content =
+    Task.fail NotFound
+    {-
     let
         gistInput : GistInput
         gistInput =
@@ -213,25 +244,29 @@ saveGist idToken accessToken input content =
             GithubRequest.createGist accessToken gistInput
                 |> Task.mapError RequestError.fromHttpError
                 |> Task.andThen saveTask
+    -}
 
-
-saveSettings : Maybe IdToken -> DiagramType -> InputSettings -> Task RequestError DiagramSettings.Settings
-saveSettings idToken diagram input =
+saveSettings : Maybe IdToken -> DiagramType {- -> InputSettings -} -> Task RequestError DiagramSettings.Settings
+saveSettings idToken diagram {- inputs -} =
+    Task.fail NotFound
+    {-
     Mutation.saveSettings diagram input
         |> Http.mutationRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
+    -}
 
 settings : Maybe IdToken -> DiagramType -> Task RequestError DiagramSettings.Settings
 settings idToken diagram =
+    Task.fail NotFound
+    {-
     Query.settings diagram
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
+    -}
 
 share :
     { idToken : Maybe IdToken
@@ -243,6 +278,8 @@ share :
     }
     -> Task RequestError String
 share { idToken, itemID, expSecond, password, allowIPList, allowEmailList } =
+    Task.fail NotFound
+    {-
     Mutation.share
         { itemID = Graphql.Scalar.Id itemID
         , expSecond = Present <| Duration.toInt expSecond
@@ -260,26 +297,31 @@ share { idToken, itemID, expSecond, password, allowIPList, allowEmailList } =
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
+    -}
 
-
-shareCondition : Maybe IdToken -> String -> Task RequestError (Maybe Query.ShareCondition)
+shareCondition : Maybe IdToken -> String -> Task RequestError (Maybe String) --(Maybe Query.ShareCondition)
 shareCondition idToken id =
+    Task.fail NotFound
+    {-
     Query.shareCondition id
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
-
+    -}
 
 shareItem : Maybe IdToken -> String -> Maybe String -> Task RequestError DiagramItem
 shareItem idToken id password =
+    Task.fail NotFound
+    {-
     Query.shareItem id password
         |> Http.queryRequest graphQLUrl
         |> authHeaders idToken
         |> Http.toTask
         |> Task.mapError toError
+    -}
 
-
+{-
 authHeaders : Maybe IdToken -> Http.Request decodesTo -> Http.Request decodesTo
 authHeaders idToken =
     case idToken of
@@ -288,8 +330,8 @@ authHeaders idToken =
 
         Nothing ->
             Http.withOperationName ""
-
+-}
 
 graphQLUrl : String
 graphQLUrl =
-    crossOrigin Env.apiRoot [ "graphql" ] []
+    crossOrigin "FIXME Env.apiRoot" [ "graphql" ] []

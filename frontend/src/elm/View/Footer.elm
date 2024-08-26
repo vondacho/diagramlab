@@ -6,7 +6,7 @@ import Diagram.Types.Location as DiagramLocation exposing (Location)
 import Diagram.Types.Type as DiagramType exposing (DiagramType)
 import ElmBook.Actions as Actions
 import ElmBook.Chapter as Chapter exposing (Chapter)
-import Env
+--import Env
 import Events
 import Html.Styled as Html exposing (Html)
 import Html.Styled.Attributes as Attr
@@ -45,6 +45,7 @@ view props =
         ]
         [ diagramTypeSelect props
         , Lazy.lazy2 viewLocationButton props.session props.currentDiagram.location
+        {-
         , Html.div
             [ Attr.css
                 [ ColorStyle.textSecondaryColor
@@ -53,9 +54,9 @@ view props =
                 , Style.paddingRightSm
                 ]
             ]
-            [ Html.text Env.appVersion ]
+            [ Html.text "Env.appVersion" ]
         , Html.iframe
-            [ Attr.src Env.repoButtonUrl
+            [ Attr.src "Env.repoButtonUrl"
             , Attr.attribute "frameborder" "0"
             , Attr.attribute "scrolling" "0"
             , Attr.width 90
@@ -64,6 +65,7 @@ view props =
             , Attr.css [ Css.marginLeft <| Css.px 8 ]
             ]
             []
+        -}
         ]
 
 

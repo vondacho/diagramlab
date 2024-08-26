@@ -8,15 +8,10 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 const outDirectory = path.join(import.meta.dirname, 'dist');
 const day = 60 * 60 * 24;
 const env = [
-  'FIREBASE_API_KEY',
-  'FIREBASE_AUTH_DOMAIN',
-  'FIREBASE_PROJECT_ID',
-  'FIREBASE_APP_ID',
   'SENTRY_ENABLE',
   'SENTRY_DSN',
   'SENTRY_RELEASE',
-  'MONITOR_ENABLE',
-  'FIREBASE_AUTH_EMULATOR_HOST',
+  'MONITOR_ENABLE'
 ];
 
 export default defineConfig(({ mode }) => ({

@@ -32,7 +32,7 @@ import Dialog.Share
 import Dialog.Types as Dialog
 import Effect
 import Effect.Settings
-import Env
+--import Env
 import File.Download as Download
 import Html.Styled as Html exposing (Html)
 import Html.Styled.Attributes as Attr
@@ -341,7 +341,7 @@ init flags url key =
                 Diagram.State.init initSettings.diagramSettings
                     |> Tuple.first
                     |> Diagram.Lens.text.set (Maybe.withDefault Text.empty initSettings.text)
-            , diagramListModel = Page.List.init Session.guest lang Env.apiRoot flags.isOnline |> Tuple.first
+            , diagramListModel = Page.List.init Session.guest lang "FIXME Env.apiRoot" flags.isOnline |> Tuple.first
             , settingsModel =
                 Page.Settings.init
                     { canUseNativeFileSystem = flags.canUseNativeFileSystem

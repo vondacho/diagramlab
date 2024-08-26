@@ -1,12 +1,12 @@
 port module Dialog.Share exposing (CopyState, InputCondition, Model, Msg(..), init, update, view)
 
-import Api.Graphql.Query exposing (ShareCondition)
+--import Api.Graphql.Query exposing (ShareCondition)
 import Api.Request as Request
 import Bool.Extra as BoolEx
 import Css
 import Diagram.Types.Id as DiagramId exposing (DiagramId)
 import Diagram.Types.Type as DiagramType exposing (DiagramType)
-import Env
+--import Env
 import Events
 import Html.Styled as Html exposing (Html)
 import Html.Styled.Attributes as Attr
@@ -39,6 +39,8 @@ import View.Empty as Empty
 import View.Icon as Icon
 import View.Spinner as Spinner
 import View.Switch as Switch
+import Browser.Dom exposing (Error(..))
+import Message exposing (messageNotAuthorized)
 
 
 type alias InputCondition =
@@ -87,7 +89,7 @@ type Msg
     | UseLimitByEmail Bool
     | EditIP String
     | EditEmail String
-    | LoadShareCondition (Result Message ShareCondition)
+    | LoadShareCondition (Result Message String {-ShareCondition-})
 
 
 type CopyState
@@ -103,7 +105,7 @@ sharUrl : RemoteData Message String -> DiagramType -> String
 sharUrl token diagramType =
     case token of
         Success t ->
-            crossOrigin Env.webRoot
+            crossOrigin "FIXME Env.webRoot"
                 [ "view"
                 , DiagramType.toString diagramType
                 , t
@@ -132,7 +134,7 @@ embedUrl { token, diagramType, title, embedSize } =
 
                 embed : String
                 embed =
-                    crossOrigin Env.webRoot
+                    crossOrigin "FIXME Env.webRoot"
                         [ "embed"
                         , DiagramType.toString diagramType
                         , Title.toString title
@@ -173,7 +175,7 @@ share { diagramId, expireSecond, password, allowIPList, allowEmail } session =
         |> Task.mapError (\_ -> Message.messageFailedSharing)
 
 
-shareCondition : DiagramId -> Session -> Task Message (Maybe ShareCondition)
+shareCondition : DiagramId -> Session -> Task Message (Maybe String {-ShareCondition-})
 shareCondition diagramId session =
     Request.shareCondition (Session.getIdToken session) (DiagramId.toString diagramId)
         |> Task.mapError (\_ -> Message.messageFailedSharing)
@@ -187,6 +189,7 @@ init :
     }
     -> Return Msg Model
 init { diagram, diagramId, session, title } =
+{-
     let
         initTask :
             Task
@@ -245,6 +248,7 @@ init { diagram, diagramId, session, title } =
             <|
                 shareCondition diagramId session
     in
+-}
     Return.singleton
         { embedSize = ( 800, 600 )
         , diagramType = diagram
@@ -269,7 +273,7 @@ init { diagram, diagramId, session, title } =
             , error = False
             }
         }
-        |> (Return.command <| Task.attempt LoadShareCondition initTask)
+        -- |> (Return.command <| Task.attempt LoadShareCondition initTask)
         |> Return.command (Task.perform GotTimeZone Time.here)
         |> Return.command (Task.perform GotNow Time.now)
 
@@ -536,16 +540,16 @@ update model msg =
                 \m ->
                     { m
                         | ip =
-                            { input = BoolEx.toMaybe (List.map IpAddress.toString cond.allowIPList |> String.join "\n") (not <| List.isEmpty cond.allowIPList)
+                            { input = Just("FIXME") --BoolEx.toMaybe (List.map IpAddress.toString cond.allowIPList |> String.join "\n") (not <| List.isEmpty cond.allowIPList)
                             , error = False
                             }
                         , email =
-                            { input = BoolEx.toMaybe (List.map Email.toString cond.allowEmail |> String.join "\n") (not <| List.isEmpty cond.allowEmail)
+                            { input = Just("FIXME") --BoolEx.toMaybe (List.map Email.toString cond.allowEmail |> String.join "\n") (not <| List.isEmpty cond.allowEmail)
                             , error = False
                             }
-                        , token = RemoteData.succeed cond.token
-                        , expireDate = DateUtils.millisToDateString m.timeZone (Time.millisToPosix <| cond.expireTime)
-                        , expireTime = DateUtils.millisToTimeString m.timeZone (Time.millisToPosix <| cond.expireTime)
+                        , token = RemoteData.succeed "FIXME" --cond.token
+                        , expireDate = "FIXME" --DateUtils.millisToDateString m.timeZone (Time.millisToPosix <| cond.expireTime)
+                        , expireTime = "FIXME" --DateUtils.millisToTimeString m.timeZone (Time.millisToPosix <| cond.expireTime)
                     }
 
         LoadShareCondition (Err _) ->

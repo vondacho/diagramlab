@@ -141,13 +141,13 @@ saveToRemote msg { diagram, session, settings } =
         Session.SignedIn user ->
             (case ( diagram.location, settings.location, user.loginProvider ) of
                 ( Just DiagramLocation.Gist, _, LoginProvider.Github (Just accessToken) ) ->
-                    Request.saveGist (Session.getIdToken session) accessToken (DiagramItem.toInputGistItem diagram) (Text.toString diagram.text)
+                    Request.saveGist (Session.getIdToken session) accessToken {-(DiagramItem.toInputGistItem diagram)-} (Text.toString diagram.text)
 
                 ( _, Just DiagramLocation.Gist, LoginProvider.Github (Just accessToken) ) ->
-                    Request.saveGist (Session.getIdToken session) accessToken (DiagramItem.toInputGistItem diagram) (Text.toString diagram.text)
+                    Request.saveGist (Session.getIdToken session) accessToken {-(DiagramItem.toInputGistItem diagram)-} (Text.toString diagram.text)
 
                 _ ->
-                    Request.save (Session.getIdToken session) diagram.isPublic (DiagramItem.toInputItem diagram)
+                    Request.save (Session.getIdToken session) diagram.isPublic {-(DiagramItem.toInputItem diagram)-}
             )
                 |> Task.attempt msg
                 |> Return.command

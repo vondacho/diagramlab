@@ -470,6 +470,7 @@ diagramListView props =
                     ]
                     []
                 ]
+{-                
             , Html.div
                 [ Attr.css [ Style.button, Css.marginLeft <| Css.px 8 ]
                 , onClick Export
@@ -490,6 +491,7 @@ diagramListView props =
                 , Html.span [ Attr.class "bottom-tooltip" ]
                     [ Html.span [ Attr.class "text" ] [ Html.text <| Message.toolTipImport props.lang ] ]
                 ]
+-}
             ]
         , Html.div [ Attr.css [ Css.overflowY Css.auto, Css.height <| Css.calc (Css.vh 100) Css.minus (Css.px 148) ] ]
             [ Html.div
@@ -955,6 +957,7 @@ update model message =
                     (\diagrams ->
                         if Session.isSignedIn model.session then
                             Request.bulkSave (Session.getIdToken model.session)
+                                {-
                                 (List.map
                                     (\diagram ->
                                         (DiagramItem.location.set (Just DiagramLocation.Remote) >> DiagramItem.id.set Nothing) diagram
@@ -962,6 +965,7 @@ update model message =
                                     )
                                     diagrams
                                 )
+                                -}
                                 False
                                 |> Task.attempt ImportedRemoteDiagrams
                                 |> Return.command

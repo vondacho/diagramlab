@@ -10,7 +10,6 @@ import Diagram.Types.CardSize as CardSize
 import Diagram.Types.Scale as Scale
 import Diagram.Types.Settings as DiagramSettings
 import Diagram.Types.Type as DiagramType exposing (DiagramType)
-import Graphql.OptionalArgument as OptionalArgument
 import Ports
 import Return
 import Task
@@ -30,6 +29,7 @@ load :
         }
     -> Return.ReturnF msg model
 load msg { cache, diagramType, session } =
+    {-
     if Session.isSignedIn session then
         case SettingCache.get cache diagramType of
             Just setting ->
@@ -45,8 +45,8 @@ load msg { cache, diagramType, session } =
                     diagramType
                     |> Task.attempt msg
                     |> Return.command
-
     else
+    -}
         DiagramType.toString diagramType
             |> Ports.loadSettingsFromLocal
             |> Return.command
@@ -66,6 +66,7 @@ save :
         }
     -> Return.ReturnF msg model
 save msg { diagramType, session, settings } =
+    {-
     if Session.isSignedIn session then
         Request.saveSettings
             (Session.getIdToken session)
@@ -135,4 +136,5 @@ save msg { diagramType, session, settings } =
             |> Return.command
 
     else
+    -}
         saveToLocal { settings | diagram = Maybe.map (\d -> { d | diagram = diagramType }) settings.diagram }

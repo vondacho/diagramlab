@@ -1,3 +1,4 @@
+/*
 import { type FirebaseOptions, initializeApp } from 'firebase/app';
 import {
   type AuthProvider,
@@ -11,6 +12,7 @@ import {
   type UserCredential,
 } from 'firebase/auth';
 import { getPerformance } from 'firebase/performance';
+*/
 
 type User = {
   id: string;
@@ -20,13 +22,16 @@ type User = {
   provider: string | undefined;
   accessToken: string | undefined;
 };
-
+/*
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.FIREBASE_API_KEY ?? '',
   authDomain: process.env.FIREBASE_AUTH_DOMAIN ?? '',
   projectId: process.env.FIREBASE_PROJECT_ID ?? '',
   appId: process.env.FIREBASE_APP_ID ?? '',
 };
+*/
+
+/*
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth();
 
@@ -133,3 +138,4 @@ export const signInGithubWithGist = async (): Promise<{
         reject(error);
       });
   });
+*/

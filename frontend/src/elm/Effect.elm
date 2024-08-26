@@ -30,7 +30,7 @@ changePublicState msg { isPublic, item, session } =
     Request.save
         (Session.getIdToken session)
         isPublic
-        (DiagramItem.toInputItem item)
+        --(DiagramItem.toInputItem item)
         |> Task.mapError (\_ -> item)
         |> Task.attempt msg
         |> Return.command

@@ -11,23 +11,23 @@ module Diagram.Types.Item exposing
     , listToValue
     , localFile
     , location
-    , mapToDateTime
+    --, mapToDateTime
     , new
     , stringToList
     , text
     , thumbnail
     , title
-    , toInputGistItem
-    , toInputItem
+    --, toInputGistItem
+    --, toInputItem
     )
 
 import Diagram.Types.Id as DiagramId exposing (DiagramId)
 import Diagram.Types.Location as DiagramLocation exposing (Location)
 import Diagram.Types.Type as DiagramType exposing (DiagramType)
-import Graphql.InputObject exposing (InputGistItem, InputItem)
-import Graphql.OptionalArgument as OptionalArgument
-import Graphql.Scalar
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
+--import Graphql.InputObject exposing (InputGistItem, InputItem)
+--import Graphql.OptionalArgument as OptionalArgument
+--import Graphql.Scalar
+--import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 import Iso8601
 import Json.Decode as D
 import Json.Decode.Pipeline exposing (optional, required)
@@ -135,7 +135,7 @@ localFile title_ text_ =
         _ ->
             { empty | text = Text.fromString text_, title = Title.fromString title_, location = Just DiagramLocation.LocalFileSystem }
 
-
+{-
 mapToDateTime : SelectionSet Graphql.Scalar.Time typeLock -> SelectionSet Posix typeLock
 mapToDateTime =
     SelectionSet.mapOrFail
@@ -148,7 +148,7 @@ mapToDateTime =
                             ++ " as Iso8601 DateTime."
                     )
         )
-
+-}
 
 empty : DiagramItem
 empty =
@@ -174,7 +174,7 @@ stringToList : String -> Result D.Error (List DiagramItem)
 stringToList json =
     D.decodeString (D.list decoder) json
 
-
+{-
 toInputGistItem : DiagramItem -> InputGistItem
 toInputGistItem item =
     { id =
@@ -196,8 +196,9 @@ toInputGistItem item =
     , isBookmark = item.isBookmark
     , url = ""
     }
+-}
 
-
+{-
 toInputItem : DiagramItem -> InputItem
 toInputItem item =
     { id =
@@ -220,7 +221,7 @@ toInputItem item =
     , isPublic = item.isPublic
     , isBookmark = item.isBookmark
     }
-
+-}
 
 
 -- Lens

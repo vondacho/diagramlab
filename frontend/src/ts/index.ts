@@ -5,6 +5,7 @@ import { Workbox } from 'workbox-window';
 // @ts-expect-error: Unreachable code error
 import { Elm } from '../elm/Main.elm';
 import '../styles.css';
+/*
 import {
   signOut,
   signIn,
@@ -14,6 +15,7 @@ import {
   pollRefreshToken,
   signInGithubWithGist,
 } from './auth';
+*/
 import { initDatabase } from './db';
 import { initDownload } from './download';
 import { setElmApp } from './editor';
@@ -82,6 +84,8 @@ const app = (Elm as ElmType).Main.init({
 });
 
 setElmApp(app);
+
+/*
 authStateChanged(
   () => {
     app.ports.progress.send(true);
@@ -108,6 +112,7 @@ authStateChanged(
     }
   }
 );
+*/
 
 app.ports.loadSettingsFromLocal.subscribe((diagramType: string) => {
   app.ports.loadSettingsFromLocalCompleted.send(loadSettings(isDarkMode, diagramType));
@@ -117,6 +122,7 @@ app.ports.saveSettingsToLocal.subscribe((settings: Settings) => {
   saveSettings(settings);
 });
 
+/*
 app.ports.signIn.subscribe(async (provider: Provider) => {
   switch (provider) {
     case 'Google': {
@@ -147,6 +153,7 @@ app.ports.refreshToken.subscribe(async () => {
     app.ports.updateIdToken.send(idToken);
   }
 });
+*/
 
 app.ports.selectTextById.subscribe(async (id: string) => {
   const element = document.querySelector(`#${id}`);
